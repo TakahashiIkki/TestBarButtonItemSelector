@@ -10,9 +10,9 @@ import UIKit
 
 class MasterViewController: UITableViewController {
 
+    @IBOutlet weak var myShowMaintenancePageButton: UIBarButtonItem!
     var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,22 +21,30 @@ class MasterViewController: UITableViewController {
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
+        
+        
+        
         if let split = self.splitViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
     }
 
+    
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    @IBAction func onClickShowMaintenanceButton(sender: AnyObject) {
+        insertNewObject(sender)
+    }
+    
     func insertNewObject(sender: AnyObject) {
         objects.insert(NSDate(), atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
@@ -88,7 +96,6 @@ class MasterViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
-
 
 }
 
